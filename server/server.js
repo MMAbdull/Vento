@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
+const invitationRoutes = require("./routes/invitationRoutes");
 const connectDatabase = require("./config/database");
 
 const app = express();
@@ -10,6 +11,8 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/invitations", invitationRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({
