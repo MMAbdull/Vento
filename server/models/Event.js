@@ -53,7 +53,6 @@ const eventSchema = new mongoose.Schema(
 
     theme: {
       type: String,
-      required: true,
       default: "classic-rose",
     },
 

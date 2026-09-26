@@ -1,11 +1,11 @@
 const Event = require("../models/Event");
 
 const createEvent = async (eventData) => {
-  return await Event.create(eventData);
+  return Event.create(eventData);
 };
 
 const findEventById = async (id) => {
-  return await Event.findById(id);
+  return Event.findById(id);
 };
 
 module.exports = {
