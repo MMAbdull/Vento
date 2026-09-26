@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { createInvitation } from "../api/invitationApi";
+import { createEvent } from "../api/eventApi";
 
 function EventCreation({ onCreated }) {
   const [formData, setFormData] = useState({
-    coupleNames: "",
+    eventType: "wedding",
+    title: "",
     date: "",
     time: "",
     venue: "",
@@ -29,7 +30,7 @@ function EventCreation({ onCreated }) {
     try {
       setError("");
 
-      const result = await createInvitation(formData);
+      const result = await createEvent(formData);
 
       onCreated(result.data);
     } catch (error) {
@@ -43,12 +44,33 @@ function EventCreation({ onCreated }) {
 
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="coupleNames">Couple Names</label>
+          <label htmlFor="eventType">Event Type</label>
+          <select
+            id="eventType"
+            name="eventType"
+            value={formData.eventType}
+            onChange={handleChange}
+            required
+          >
+            <option value="wedding">Wedding</option>
+            <option value="engagement">Engagement</option>
+            <option value="gender-reveal">Gender Reveal</option>
+            <option value="birthday">Birthday</option>
+            <option value="baby-shower">Baby Shower</option>
+            <option value="anniversary">Anniversary</option>
+            <option value="graduation">Graduation</option>
+            <option value="corporate">Corporate</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="title">Event Title</label>
           <input
-            id="coupleNames"
-            name="coupleNames"
+            id="title"
+            name="title"
             type="text"
-            value={formData.coupleNames}
+            value={formData.title}
             onChange={handleChange}
             required
           />
@@ -122,6 +144,7 @@ function EventCreation({ onCreated }) {
             onChange={handleChange}
           >
             <option value="classic-rose">Classic Rose</option>
+            <option value="potato-venue">Potato Venue</option>
           </select>
         </div>
 

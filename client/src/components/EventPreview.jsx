@@ -4,7 +4,8 @@ function EventPreview({ event }) {
       <h2>Event Created!</h2>
 
       <p>ID: {event._id}</p>
-      <p>Couple: {event.coupleNames}</p>
+      <p>Event Type: {event.eventType}</p>
+      <p>Title: {event.title}</p>
       <p>Date: {event.date}</p>
       <p>Time: {event.time}</p>
       <p>Venue: {event.venue}</p>
