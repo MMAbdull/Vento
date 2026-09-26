@@ -1,8 +1,24 @@
 const mongoose = require("mongoose");
 
-const invitationSchema = new mongoose.Schema(
+const eventSchema = new mongoose.Schema(
   {
-    coupleNames: {
+    eventType: {
+      type: String,
+      required: true,
+      enum: [
+        "wedding",
+        "engagement",
+        "gender-reveal",
+        "birthday",
+        "baby-shower",
+        "anniversary",
+        "graduation",
+        "corporate",
+        "other",
+      ],
+    },
+
+    title: {
       type: String,
       required: true,
       trim: true,
@@ -58,4 +74,4 @@ const invitationSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Invitation", invitationSchema);
+module.exports = mongoose.model("Event", eventSchema);
