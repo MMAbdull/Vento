@@ -1,22 +1,37 @@
-import { useState } from "react";
-import { createEvent } from "../api/eventApi";
+import { useState, useEffect } from "react";
+import { createEvent, updateEvent } from "../api/eventApi";
 
-function EventCreation({ onCreated }) {
+function EventCreation({ event, onCreated }) {
   const [formData, setFormData] = useState({
-    eventType: "wedding",
-    title: "",
-    date: "",
-    time: "",
-    venue: "",
-    message: "",
-    language: "en",
-    theme: "classic-rose",
+    eventType: event?.eventType || "",
+    title: event?.title || "",
+    date: event?.date ? event.date.split("T")[0] : "",
+    time: event?.time || "",
+    venue: event?.venue || "",
+    message: event?.message || "",
+    language: event?.language || "en",
+    theme: event?.theme || "classic-rose",
   });
+
+useEffect(() => {
+    if (event) {
+      setFormData({
+        eventType: event.eventType || "",
+        title: event.title || "",
+        date: event.date ? event.date.split("T")[0] : "",
+        time: event.time || "",
+        venue: event.venue || "",
+        message: event.message || "",
+        language: event.language || "en",
+        theme: event.theme || "classic-rose",
+      });
+    }
+  }, [event]);
 
   const [error, setError] = useState("");
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+  const handleChange = (changeEvent) => {
+    const { name, value } = changeEvent.target;
 
     setFormData((previousData) => ({
       ...previousData,
@@ -24,13 +39,19 @@ function EventCreation({ onCreated }) {
     }));
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (submitEvent) => {
+    submitEvent.preventDefault();
 
     try {
       setError("");
 
-      const result = await createEvent(formData);
+      let result;
+
+      if (event) {
+        result = await updateEvent(event._id, formData);
+      } else {
+        result = await createEvent(formData);
+      }
 
       onCreated(result.data);
     } catch (error) {
@@ -40,7 +61,7 @@ function EventCreation({ onCreated }) {
 
   return (
     <div>
-      <h2>Create Event</h2>
+      <h2>{event ? "Edit Event" : "Create Event"}</h2>
 
       <form onSubmit={handleSubmit}>
         <div>
@@ -148,7 +169,7 @@ function EventCreation({ onCreated }) {
           </select>
         </div>
 
-        <button type="submit">Create Event</button>
+        <button type="submit">{event ? "Save Changes" : "Create Event"}</button>
       </form>
 
       {error && <p>{error}</p>}

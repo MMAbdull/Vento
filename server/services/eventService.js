@@ -8,7 +8,12 @@ const findEventById = async (id) => {
   return eventRepository.findEventById(id);
 };
 
+const updateEvent = async (id, eventData) => {
+  return eventRepository.updateEvent(id, eventData);
+};
+
 module.exports = {
   createEvent,
   findEventById,
+  updateEvent,
 };

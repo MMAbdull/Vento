@@ -9,7 +9,7 @@ function App() {
     <div>
       <h1>Vento</h1>
 
-      <EventCreation onCreated={setEvent} />
+      <EventCreation event={event} onCreated={setEvent} />
       {event && <EventPreview event={event} />}
       
     </div>

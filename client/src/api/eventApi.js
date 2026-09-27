@@ -29,4 +29,21 @@ const getEventById = async (id) => {
   return data;
 };
 
-export { createEvent, getEventById };
+const updateEvent = async (id, eventData) => {
+  const response = await fetch(`${API_URL}/api/events/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(eventData)
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to update event");
+  }
+
+  return data;
+};
+
+export { createEvent, getEventById, updateEvent };
