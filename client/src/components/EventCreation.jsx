@@ -73,6 +73,7 @@ useEffect(() => {
             onChange={handleChange}
             required
           >
+            <option value="">Select event type</option>
             <option value="wedding">Wedding</option>
             <option value="engagement">Engagement</option>
             <option value="gender-reveal">Gender Reveal</option>

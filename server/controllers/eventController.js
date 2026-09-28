@@ -62,8 +62,32 @@ const updateEvent = async (req, res) => {
   }
 };
 
+const publishEvent = async (req, res) => {
+  try {
+    const event = await eventService.publishEvent(req.params.id);
+
+    if (!event) {
+      return res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: event,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createEvent,
   getEventById,
   updateEvent,
+  publishEvent,
 };

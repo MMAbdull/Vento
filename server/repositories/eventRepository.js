@@ -15,8 +15,22 @@ const updateEvent = async (id, eventData) => {
   });
 };
 
+const publishEvent = async (id, slug) => {
+  return Event.findByIdAndUpdate(
+    id,
+    {
+      status: "published",
+      slug,
+    },
+    {
+      new: true,
+      runValidators: true,
+    });
+};
+
 module.exports = {
   createEvent,
   findEventById,
   updateEvent,
+  publishEvent,
 };

@@ -46,4 +46,18 @@ const updateEvent = async (id, eventData) => {
   return data;
 };
 
-export { createEvent, getEventById, updateEvent };
+const publishEvent = async (id) => {
+  const response = await fetch(`${API_URL}/api/events/${id}/publish`, {
+    method: "PUT",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to publish event");
+  }
+
+  return data;
+};
+
+export { createEvent, getEventById, updateEvent, publishEvent };
