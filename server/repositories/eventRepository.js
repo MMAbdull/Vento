@@ -8,6 +8,10 @@ const findEventById = async (id) => {
   return Event.findById(id);
 };
 
+const findEventBySlug = async (slug) => {
+  return Event.findOne({ slug });
+}
+
 const updateEvent = async (id, eventData) => {
   return Event.findByIdAndUpdate(id, eventData, {
     new: true,
@@ -31,6 +35,7 @@ const publishEvent = async (id, slug) => {
 module.exports = {
   createEvent,
   findEventById,
+  findEventBySlug,
   updateEvent,
   publishEvent,
 };

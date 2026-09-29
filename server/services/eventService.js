@@ -9,6 +9,10 @@ const findEventById = async (id) => {
   return eventRepository.findEventById(id);
 };
 
+const findEventBySlug = async (slug) => {
+  return eventRepository.findEventBySlug(slug);
+}
+
 const updateEvent = async (id, eventData) => {
   return eventRepository.updateEvent(id, eventData);
 };
@@ -28,6 +32,7 @@ const publishEvent = async (id) => {
 module.exports = {
   createEvent,
   findEventById,
+  findEventBySlug,
   updateEvent,
   publishEvent,
 };

@@ -39,9 +39,32 @@ const getEventById = async (req, res) => {
   }
 };
 
+const getEventBySlug = async (req, res) => {
+  try {
+    const event = await eventService.findEventBySlug(req.params.slug);
+
+    if (!event) {
+      return res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: event,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const updateEvent = async (req, res) => {
   try {
-    const event = await eventService.updateEvent(req.params.id, req.body);
+    const event = await eventService.updateEvent(req.params.id);
 
     if (!event) {
       return res.status(404).json({
@@ -88,6 +111,7 @@ const publishEvent = async (req, res) => {
 module.exports = {
   createEvent,
   getEventById,
+  getEventBySlug,
   updateEvent,
   publishEvent,
 };

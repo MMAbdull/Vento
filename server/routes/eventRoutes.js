@@ -3,6 +3,7 @@ const express = require("express");
 const {
   createEvent,
   getEventById,
+  getEventBySlug,
   updateEvent,
   publishEvent,
 } = require("../controllers/eventController");
@@ -10,6 +11,7 @@ const {
 const router = express.Router();
 
 router.post("/", createEvent);
+router.get("/slug/:slug", getEventBySlug);
 router.get("/:id", getEventById);
 router.put("/:id", updateEvent);
 router.put("/:id/publish", publishEvent);

@@ -29,6 +29,18 @@ const getEventById = async (id) => {
   return data;
 };
 
+const getEventBySlug = async (slug) => {
+  const response = await fetch(`${API_URL}/api/events/slug/${slug}`);
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to get event");
+  }
+
+  return data;
+};
+
 const updateEvent = async (id, eventData) => {
   const response = await fetch(`${API_URL}/api/events/${id}`, {
     method: "PUT",
@@ -60,4 +72,4 @@ const publishEvent = async (id) => {
   return data;
 };
 
-export { createEvent, getEventById, updateEvent, publishEvent };
+export { createEvent, getEventById, getEventBySlug, updateEvent, publishEvent };
