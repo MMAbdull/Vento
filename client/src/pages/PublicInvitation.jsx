@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getEventBySlug } from "../api/eventApi";
+import ClassicRose from "../themes/classic-rose/ClassicRose";
+
+const themes = {
+  "classic-rose": ClassicRose,
+}
 
 function PublicInvitation() {
-  const { eventType, slug } = useParams();
+  const { slug } = useParams();
 
   const [event, setEvent] = useState(null);
   const [error, setError] = useState("");
@@ -29,18 +34,13 @@ function PublicInvitation() {
     return <p>Loading invitation...</p>;
   }
 
-  return (
-    <div>
-      <h1>Public Invitation Page</h1>
+  const Theme = themes[event.theme];
 
-      <p>Event Type: {eventType}</p>
-      <p>Title: {event.title}</p>
-      <p>Date: {event.date}</p>
-      <p>Time: {event.time}</p>
-      <p>Venue: {event.venue}</p>
-      <p>Message: {event.message}</p>
-    </div>
-  );
+  if (!Theme) {
+    return <p>Theme not found</p>;
+  }
+
+  return <Theme event={event} />;
 }
 
 export default PublicInvitation;

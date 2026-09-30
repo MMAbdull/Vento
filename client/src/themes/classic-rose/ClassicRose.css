@@ -1,0 +1,51 @@
+.classic-rose {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background: #fdf7f8;
+}
+
+.classic-rose__card {
+  width: 100%;
+  max-width: 600px;
+  padding: 60px 30px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #ead4da;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(80, 30, 45, 0.08);
+}
+
+.classic-rose__label {
+  margin-bottom: 20px;
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #9b596b;
+}
+
+.classic-rose__title {
+  margin: 0;
+  font-size: 42px;
+  font-weight: 500;
+  color: #542b38;
+}
+
+.classic-rose__details {
+  margin: 35px 0;
+}
+
+.classic-rose__date,
+.classic-rose__time,
+.classic-rose__venue {
+  margin: 8px 0;
+  color: #6f4a55;
+}
+
+.classic-rose__message {
+  margin-top: 35px;
+  line-height: 1.7;
+  color: #765963;
+}
