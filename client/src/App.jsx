@@ -6,6 +6,12 @@ import PublicInvitation from "./pages/PublicInvitation";
 
 function App() {
   const [event, setEvent] = useState(null);
+  const [draftEvent, setDraftEvent] = useState(null);
+
+  const handleEventSaved =  (eventData) => {
+    setEvent(eventData);
+    setDraftEvent(eventData);
+  };
 
   return (
     <Routes>
@@ -13,8 +19,8 @@ function App() {
         <div>
           <h1>Vento</h1>
 
-          <EventCreation event={event} onCreated={setEvent} />
-          {event && <EventPreview event={event} onPublished={setEvent} />}
+          <EventCreation event={event} onCreated={handleEventSaved} onFormChange={setDraftEvent} />
+          {event && <EventPreview event={draftEvent || event} onPublished={setEvent} />}
 
         </div>
       }

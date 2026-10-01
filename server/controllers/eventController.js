@@ -64,7 +64,7 @@ const getEventBySlug = async (req, res) => {
 
 const updateEvent = async (req, res) => {
   try {
-    const event = await eventService.updateEvent(req.params.id);
+    const event = await eventService.updateEvent(req.params.id, req.body);
 
     if (!event) {
       return res.status(404).json({

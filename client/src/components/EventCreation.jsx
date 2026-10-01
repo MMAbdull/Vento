@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createEvent, updateEvent } from "../api/eventApi";
 
-function EventCreation({ event, onCreated }) {
+function EventCreation({ event, onCreated, onFormChange }) {
   const [formData, setFormData] = useState({
     eventType: event?.eventType || "",
     title: event?.title || "",
@@ -13,7 +13,7 @@ function EventCreation({ event, onCreated }) {
     theme: event?.theme || "classic-rose",
   });
 
-useEffect(() => {
+  useEffect(() => {
     if (event) {
       setFormData({
         eventType: event.eventType || "",
@@ -33,10 +33,13 @@ useEffect(() => {
   const handleChange = (changeEvent) => {
     const { name, value } = changeEvent.target;
 
-    setFormData((previousData) => ({
-      ...previousData,
+    const updatedData = {
+      ...formData,
       [name]: value,
-    }));
+    };
+
+    setFormData(updatedData);
+    onFormChange(updatedData);
   };
 
   const handleSubmit = async (submitEvent) => {
