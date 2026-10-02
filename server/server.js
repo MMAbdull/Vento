@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 
 const eventRoutes = require("./routes/eventRoutes");
+const rsvpRoutes = require("./routes/rsvpRoutes");
 const connectDatabase = require("./config/database");
 
 const app = express();
@@ -13,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/events", eventRoutes);
-
+app.use("/api/events", rsvpRoutes);
 app.get("/api/health", (req, res) => {
   res.json({
     success: true,
