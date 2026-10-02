@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { publishEvent } from "../api/eventApi";
 import ClassicRose from "../themes/classic-rose/ClassicRose";
+import RSVPResponses from "./RSVPResponses";
 
 function EventPreview({ event, onPublished }) {
   const [error, setError] = useState("");
@@ -38,6 +39,8 @@ function EventPreview({ event, onPublished }) {
       )}
 
       {error && <p>{error}</p>}
+
+      <RSVPResponses eventId={event._id} />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { useState } from "react";
 import EventCreation from "./components/EventCreation";
 import EventPreview from "./components/EventPreview";
 import PublicInvitation from "./pages/PublicInvitation";
+import EventManagement from "./pages/EventManagement";
 
 function App() {
   const [event, setEvent] = useState(null);
@@ -25,6 +26,7 @@ function App() {
         </div>
       }
     />
+      <Route path="/event/:id" element={<EventManagement />} />
       <Route path="/invite/:eventType/:slug" element={<PublicInvitation />} />
     </Routes>
   );

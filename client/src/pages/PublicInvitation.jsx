@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getEventBySlug } from "../api/eventApi";
 import ClassicRose from "../themes/classic-rose/ClassicRose";
-
+import RSVPForm from "../components/RSVPForm";
 const themes = {
   "classic-rose": ClassicRose,
 }
@@ -40,7 +40,12 @@ function PublicInvitation() {
     return <p>Theme not found</p>;
   }
 
-  return <Theme event={event} />;
-}
+  return (
+    <>
+      <Theme event={event} />
+      <RSVPForm eventId={event._id} />
+    </>
+  );
+};
 
 export default PublicInvitation;
