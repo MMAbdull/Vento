@@ -9,10 +9,15 @@ function App() {
   const [event, setEvent] = useState(null);
   const [draftEvent, setDraftEvent] = useState(null);
 
-  const handleEventSaved =  (eventData) => {
+  const handleEventSaved = (eventData) => {
     setEvent(eventData);
     setDraftEvent(eventData);
   };
+
+  const handleEventPublished = (eventData) => {
+    setEvent(eventData);
+    setDraftEvent(eventData);
+  }
 
   return (
     <Routes>
@@ -21,7 +26,7 @@ function App() {
           <h1>Vento</h1>
 
           <EventCreation event={event} onCreated={handleEventSaved} onFormChange={setDraftEvent} />
-          {event && <EventPreview event={draftEvent || event} onPublished={setEvent} />}
+          {event && <EventPreview event={draftEvent || event} onPublished={handleEventPublished} />}
 
         </div>
       }
