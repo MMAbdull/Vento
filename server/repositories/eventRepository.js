@@ -14,7 +14,7 @@ const findEventBySlug = async (slug) => {
 
 const updateEvent = async (id, eventData) => {
   return Event.findByIdAndUpdate(id, eventData, {
-    new: true,
+    returnDocument: true,
     runValidators: true,
   });
 };
@@ -27,7 +27,7 @@ const publishEvent = async (id, slug) => {
       slug,
     },
     {
-      new: true,
+      returnDocument: true,
       runValidators: true,
     });
 };
