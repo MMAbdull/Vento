@@ -3,49 +3,112 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
-  background: #fdf7f8;
+  padding: 60px 20px 30px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(
+      circle at top,
+      #ffffff 0%,
+      #fdf7f8 45%,
+      #f8edef 100%
+    );
 }
 
 .classic-rose__card {
+  position: relative;
   width: 100%;
   max-width: 600px;
-  padding: 60px 30px;
+  padding: 65px 40px;
+  box-sizing: border-box;
   text-align: center;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.94);
   border: 1px solid #ead4da;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(80, 30, 45, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(80, 30, 45, 0.1);
+}
+
+.classic-rose__ornament {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #9b596b;
 }
 
 .classic-rose__label {
-  margin-bottom: 20px;
-  font-size: 14px;
-  letter-spacing: 3px;
+  margin: 0 0 18px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: #9b596b;
 }
 
 .classic-rose__title {
   margin: 0;
-  font-size: 42px;
+  font-size: clamp(32px, 7vw, 48px);
+  line-height: 1.15;
   font-weight: 500;
   color: #542b38;
 }
 
-.classic-rose__details {
-  margin: 35px 0;
+.classic-rose__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 32px auto;
+  max-width: 180px;
+  color: #9b596b;
 }
 
-.classic-rose__date,
-.classic-rose__time,
-.classic-rose__venue {
-  margin: 8px 0;
+.classic-rose__divider span:first-child,
+.classic-rose__divider span:last-child {
+  width: 50px;
+  height: 1px;
+  background: #ead4da;
+}
+
+.classic-rose__details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.classic-rose__detail-label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #9b596b;
+}
+
+.classic-rose__detail p {
+  margin: 0;
   color: #6f4a55;
+  line-height: 1.5;
 }
 
 .classic-rose__message {
-  margin-top: 35px;
-  line-height: 1.7;
+  max-width: 450px;
+  margin: 35px auto 0;
+  line-height: 1.8;
   color: #765963;
+  font-style: italic;
+}
+
+@media (max-width: 600px) {
+  .classic-rose {
+    padding: 30px 10px 20px;
+    align-items: flex-start;
+  }
+
+  .classic-rose__card {
+    padding: 45px 22px;
+    border-radius: 20px;
+  }
+
+  .classic-rose__divider {
+    margin: 25px auto;
+  }
 }

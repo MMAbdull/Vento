@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createRSVP } from "../api/rsvpApi";
+import "../styles/components/RSVPForm.css";
 
 function RSVPForm({ eventId }) {
   const [formData, setFormData] = useState({
@@ -51,24 +52,31 @@ function RSVPForm({ eventId }) {
   };
 
   return (
-    <section>
-      <h2>RSVP</h2>
+    <section className="rsvp-form">
+      <div className="rsvp-form__header">
+        <span className="rsvp-form__symbol">♡</span>
 
-      <form onSubmit={handleSubmit}>
-        <div>
+        <h2>RSVP</h2>
+
+        <p>Let us know if you'll be joining us.</p>
+      </div>
+
+      <form className="rsvp-form__form" onSubmit={handleSubmit}>
+        <div className="rsvp-form__field">
           <label htmlFor="guestName">Your Name</label>
 
           <input
             id="guestName"
             name="guestName"
             type="text"
+            placeholder="Enter your name"
             value={formData.guestName}
             onChange={handleChange}
             required
           />
         </div>
 
-        <div>
+        <div className="rsvp-form__field">
           <label htmlFor="status">Attendance</label>
 
           <select
@@ -77,12 +85,12 @@ function RSVPForm({ eventId }) {
             value={formData.status}
             onChange={handleChange}
           >
-            <option value="attending">Attending</option>
-            <option value="not-attending">Not Attending</option>
+            <option value="attending">I'll be there</option>
+            <option value="not-attending">I can't make it</option>
           </select>
         </div>
 
-        <div>
+        <div className="rsvp-form__field">
           <label htmlFor="guestCount">Number of Guests</label>
 
           <input
@@ -96,24 +104,41 @@ function RSVPForm({ eventId }) {
           />
         </div>
 
-        <div>
-          <label htmlFor="message">Message</label>
+        <div className="rsvp-form__field">
+          <label htmlFor="message">
+            Message <span>Optional</span>
+          </label>
 
           <textarea
             id="message"
             name="message"
+            placeholder="Leave a message..."
             value={formData.message}
             onChange={handleChange}
+            rows="4"
           />
         </div>
 
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Submit RSVP"}
+        {message && (
+          <p className="rsvp-form__success">
+            {message}
+          </p>
+        )}
+
+        {error && (
+          <p className="rsvp-form__error">
+            {error}
+          </p>
+        )}
+
+        <button
+          className="rsvp-form__submit"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Sending..." : "Submit RSVP"}
         </button>
       </form>
-
-      {message && <p>{message}</p>}
-      {error && <p>{error}</p>}
     </section>
   );
 }

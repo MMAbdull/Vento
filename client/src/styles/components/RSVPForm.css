@@ -1,0 +1,148 @@
+.rsvp-form {
+  width: min(100% - 32px, 600px);
+  margin: 0 auto 60px;
+  padding: 36px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #ead4da;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(80, 30, 45, 0.08);
+}
+
+.rsvp-form__header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.rsvp-form__symbol {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 24px;
+  color: #9b596b;
+}
+
+.rsvp-form__header h2 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 500;
+  color: #542b38;
+}
+
+.rsvp-form__header p {
+  margin: 8px 0 0;
+  color: #765963;
+  line-height: 1.5;
+}
+
+.rsvp-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rsvp-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rsvp-form__field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #542b38;
+}
+
+.rsvp-form__field label span {
+  margin-left: 5px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #a18b91;
+}
+
+.rsvp-form__field input,
+.rsvp-form__field select,
+.rsvp-form__field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  border: 1px solid #ead4da;
+  border-radius: 11px;
+  outline: none;
+  background: #fdf7f8;
+  color: #542b38;
+  font: inherit;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.rsvp-form__field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.rsvp-form__field input:focus,
+.rsvp-form__field select:focus,
+.rsvp-form__field textarea:focus {
+  border-color: #9b596b;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(155, 89, 107, 0.1);
+}
+
+.rsvp-form__field input::placeholder,
+.rsvp-form__field textarea::placeholder {
+  color: #b59fa5;
+}
+
+.rsvp-form__success,
+.rsvp-form__error {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.rsvp-form__success {
+  background: #f4f8e8;
+  color: #667d00;
+}
+
+.rsvp-form__error {
+  background: #fff1f1;
+  color: #b42323;
+}
+
+.rsvp-form__submit {
+  padding: 14px 20px;
+  border: none;
+  border-radius: 11px;
+  background: #542b38;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.rsvp-form__submit:hover:not(:disabled) {
+  background: #9b596b;
+  transform: translateY(-1px);
+}
+
+.rsvp-form__submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .rsvp-form {
+    width: min(100% - 20px, 600px);
+    margin-bottom: 30px;
+    padding: 26px 18px;
+    border-radius: 18px;
+  }
+}

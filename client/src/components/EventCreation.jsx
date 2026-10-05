@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createEvent, updateEvent } from "../api/eventApi";
+import "../styles/components/EventCreation.css";
 
 function EventCreation({ event, onCreated, onFormChange }) {
   const [formData, setFormData] = useState({
@@ -63,12 +64,23 @@ function EventCreation({ event, onCreated, onFormChange }) {
   };
 
   return (
-    <div>
-      <h2>{event ? "Edit Event" : "Create Event"}</h2>
+    <section className="event-creation">
+      <div className="event-creation__header">
+        <span className="event-creation__eyebrow">VENTO</span>
 
-      <form onSubmit={handleSubmit}>
-        <div>
+        <h2>{event ? "Edit your event" : "Create your event"}</h2>
+
+        <p>
+          {event
+            ? "Update your event details and see your invitation change."
+            : "Set up the details for your invitation."}
+        </p>
+      </div>
+
+      <form className="event-creation__form" onSubmit={handleSubmit}>
+        <div className="event-creation__field">
           <label htmlFor="eventType">Event Type</label>
+
           <select
             id="eventType"
             name="eventType"
@@ -89,95 +101,113 @@ function EventCreation({ event, onCreated, onFormChange }) {
           </select>
         </div>
 
-        <div>
+        <div className="event-creation__field">
           <label htmlFor="title">Event Title</label>
+
           <input
             id="title"
             name="title"
             type="text"
+            placeholder="e.g. Ahmad & Sara"
             value={formData.title}
             onChange={handleChange}
             required
           />
         </div>
 
-        <div>
-          <label htmlFor="date">Date</label>
-          <input
-            id="date"
-            name="date"
-            type="date"
-            value={formData.date}
-            onChange={handleChange}
-            required
-          />
+        <div className="event-creation__row">
+          <div className="event-creation__field">
+            <label htmlFor="date">Date</label>
+
+            <input
+              id="date"
+              name="date"
+              type="date"
+              value={formData.date}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="event-creation__field">
+            <label htmlFor="time">Time</label>
+
+            <input
+              id="time"
+              name="time"
+              type="time"
+              value={formData.time}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="time">Time</label>
-          <input
-            id="time"
-            name="time"
-            type="time"
-            value={formData.time}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div>
+        <div className="event-creation__field">
           <label htmlFor="venue">Venue</label>
+
           <input
             id="venue"
             name="venue"
             type="text"
+            placeholder="e.g. Grand Ballroom"
             value={formData.venue}
             onChange={handleChange}
             required
           />
         </div>
 
-        <div>
-          <label htmlFor="message">Message</label>
+        <div className="event-creation__field">
+          <label htmlFor="message">
+            Message <span>Optional</span>
+          </label>
+
           <textarea
             id="message"
             name="message"
+            placeholder="Add a short message for your guests..."
             value={formData.message}
             onChange={handleChange}
+            rows="4"
           />
         </div>
 
-        <div>
-          <label htmlFor="language">Language</label>
-          <select
-            id="language"
-            name="language"
-            value={formData.language}
-            onChange={handleChange}
-          >
-            <option value="en">English</option>
-            <option value="ar">Arabic</option>
-          </select>
+        <div className="event-creation__row">
+          <div className="event-creation__field">
+            <label htmlFor="language">Language</label>
+
+            <select
+              id="language"
+              name="language"
+              value={formData.language}
+              onChange={handleChange}
+            >
+              <option value="en">English</option>
+              <option value="ar">Arabic</option>
+            </select>
+          </div>
+
+          <div className="event-creation__field">
+            <label htmlFor="theme">Theme</label>
+
+            <select
+              id="theme"
+              name="theme"
+              value={formData.theme}
+              onChange={handleChange}
+            >
+              <option value="classic-rose">Classic Rose</option>
+            </select>
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="theme">Theme</label>
-          <select
-            id="theme"
-            name="theme"
-            value={formData.theme}
-            onChange={handleChange}
-          >
-            <option value="classic-rose">Classic Rose</option>
-            <option value="potato-venue">Potato Venue</option>
-          </select>
-        </div>
+        {error && <p className="event-creation__error">{error}</p>}
 
-        <button type="submit">{event ? "Save Changes" : "Create Event"}</button>
+        <button className="event-creation__submit" type="submit">
+          {event ? "Save Changes" : "Create Event"}
+        </button>
       </form>
-
-      {error && <p>{error}</p>}
-    </div>
+    </section>
   );
 }
 

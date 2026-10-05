@@ -2,6 +2,7 @@ import { useState } from "react";
 import { publishEvent } from "../api/eventApi";
 import ClassicRose from "../themes/classic-rose/ClassicRose";
 import RSVPResponses from "./RSVPResponses";
+import "../styles/components/EventPreview.css";
 
 function EventPreview({ event, onPublished }) {
   const [error, setError] = useState("");
@@ -39,26 +40,39 @@ function EventPreview({ event, onPublished }) {
   };
 
   return (
-    <div>
-      <h2>Event Preview</h2>
+    <div className="event-preview">
+      <div className="event-preview__header">
+        <h2>Event Preview</h2>
+        <p>Preview your invitation before sharing it with your guests.</p>
+      </div>
 
       <ClassicRose event={event} />
 
       {event.status === "draft" && (
-        <button type="button" onClick={handlePublish} disabled={isPublishing}>
-          {isPublishing ? "Publishing..." : "Publish Event"}
-        </button>
+        <div className="event-preview__publish">
+          <button
+            className="event-preview__publish-button"
+            type="button"
+            onClick={handlePublish}
+            disabled={isPublishing}
+          >
+            {isPublishing ? "Publishing..." : "Publish Event"}
+          </button>
+        </div>
       )}
 
       {event.status === "published" && (
-        <div>
-          <p>Event Published!</p>
+        <div className="event-preview__published">
+          <p className="event-preview__published-title">
+            Event Published!
+          </p>
 
-          <p>
-            Your invitation link:
+          <p className="event-preview__published-text">
+            Your invitation is ready to share with your guests.
           </p>
 
           <a
+            className="event-preview__link"
             href={`/invite/${event.eventType}/${event.slug}`}
             target="_blank"
             rel="noreferrer"
@@ -66,13 +80,17 @@ function EventPreview({ event, onPublished }) {
             {window.location.origin}/invite/{event.eventType}/{event.slug}
           </a>
 
-          <button type="button" onClick={handleCopyLink}>
+          <button
+            className="event-preview__copy-button"
+            type="button"
+            onClick={handleCopyLink}
+          >
             {isCopied ? "Link Copied!" : "Copy Link"}
           </button>
         </div>
       )}
 
-      {error && <p>{error}</p>}
+      {error && <p className="event-preview__error">{error}</p>}
 
       <RSVPResponses eventId={event._id} />
     </div>
