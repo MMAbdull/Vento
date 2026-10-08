@@ -26,11 +26,11 @@ function App() {
           <h1>Vento</h1>
 
           <EventCreation event={event} onCreated={handleEventSaved} onFormChange={setDraftEvent} />
-          {event && <EventPreview event={draftEvent || event} onPublished={handleEventPublished} />}
+          {event && (<EventPreview event={draftEvent ? { ...event, ...draftEvent } : event} onPublished={handleEventPublished}/>)}
 
         </div>
       }
-    />
+      />
       <Route path="/event/:id" element={<EventManagement />} />
       <Route path="/invite/:eventType/:slug" element={<PublicInvitation />} />
     </Routes>
