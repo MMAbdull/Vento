@@ -2,7 +2,13 @@ const eventService = require("../services/eventService");
 
 const createEvent = async (req, res) => {
   try {
-    const event = await eventService.createEvent(req.body);
+    const eventData = {
+      ...req.body,
+      owner: req.user.id,
+    };
+
+
+    const event = await eventService.createEvent(eventData);
 
     res.status(201).json({
       success: true,
@@ -18,7 +24,7 @@ const createEvent = async (req, res) => {
 
 const getEventById = async (req, res) => {
   try {
-    const event = await eventService.findEventById(req.params.id);
+    const event = await eventService.findOwnedEventById(req.params.id, req.user.id);
 
     if (!event) {
       return res.status(404).json({
@@ -64,7 +70,19 @@ const getEventBySlug = async (req, res) => {
 
 const updateEvent = async (req, res) => {
   try {
-    const event = await eventService.updateEvent(req.params.id, req.body);
+
+    const eventData = {
+      eventType: req.body.eventType,
+      title: req.body.title,
+      date: req.body.date,
+      time: req.body.time,
+      venue: req.body.venue,
+      message: req.body.message,
+      language: req.body.language,
+      theme: req.body.theme,
+    }
+
+    const event = await eventService.updateOwnedEvent(req.params.id, req.user.id, eventData);
 
     if (!event) {
       return res.status(404).json({
@@ -87,7 +105,7 @@ const updateEvent = async (req, res) => {
 
 const publishEvent = async (req, res) => {
   try {
-    const event = await eventService.publishEvent(req.params.id);
+    const event = await eventService.publishOwnedEvent(req.params.id, req.user.id);
 
     if (!event) {
       return res.status(404).json({

@@ -4,24 +4,28 @@ const createEvent = async (eventData) => {
   return Event.create(eventData);
 };
 
-const findEventById = async (id) => {
-  return Event.findById(id);
+const findOwnedEventById = async (id, ownerId) => {
+  return Event.findOne({ _id: id, owner: ownerId });
 };
 
 const findEventBySlug = async (slug) => {
   return Event.findOne({ slug });
 }
 
-const updateEvent = async (id, eventData) => {
-  return Event.findByIdAndUpdate(id, eventData, {
-    returnDocument: "after",
-    runValidators: true,
-  });
+const updateOwnedEvent = async (id, ownerId, eventData) => {
+  return Event.findOneAndUpdate(
+    { _id: id, owner: ownerId },
+    eventData,
+    {
+      returnDocument: "after",
+      runValidators: true,
+    }
+  );
 };
 
-const publishEvent = async (id, slug) => {
-  return Event.findByIdAndUpdate(
-    id,
+const publishOwnedEvent = async (id, ownerId, slug) => {
+  return Event.findOneAndUpdate(
+    { _id: id, owner: ownerId },
     {
       status: "published",
       slug,
@@ -34,8 +38,8 @@ const publishEvent = async (id, slug) => {
 
 module.exports = {
   createEvent,
-  findEventById,
+  findOwnedEventById,
   findEventBySlug,
-  updateEvent,
-  publishEvent,
+  updateOwnedEvent,
+  publishOwnedEvent,
 };
