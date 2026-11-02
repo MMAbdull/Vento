@@ -8,12 +8,17 @@ const {
   publishEvent,
 } = require("../controllers/eventController");
 
+const authenticate = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
-router.post("/", createEvent);
+//public routes
 router.get("/slug/:slug", getEventBySlug);
-router.get("/:id", getEventById);
-router.put("/:id", updateEvent);
-router.put("/:id/publish", publishEvent);
+
+//authenticated customer routes
+router.post("/", authenticate, createEvent);
+router.put("/:id", authenticate, updateEvent);
+router.put("/:id/publish", authenticate, publishEvent);
+router.get("/:id", authenticate, getEventById);
 
 module.exports = router;

@@ -5,20 +5,20 @@ const createEvent = async (eventData) => {
   return eventRepository.createEvent(eventData);
 };
 
-const findEventById = async (id) => {
-  return eventRepository.findEventById(id);
+const findOwnedEventById = async (id, ownerId) => {
+  return eventRepository.findOwnedEventById(id, ownerId);
 };
 
 const findEventBySlug = async (slug) => {
   return eventRepository.findEventBySlug(slug);
 }
 
-const updateEvent = async (id, eventData) => {
-  return eventRepository.updateEvent(id, eventData);
+const updateOwnedEvent = async (id, ownerId, eventData) => {
+  return eventRepository.updateOwnedEvent(id, ownerId, eventData);
 };
 
-const publishEvent = async (id) => {
-  const event = await eventRepository.findEventById(id);
+const publishOwnedEvent = async (id, ownerId) => {
+  const event = await eventRepository.findOwnedEventById(id, ownerId);
 
   if (!event) {
     return null;
@@ -26,13 +26,13 @@ const publishEvent = async (id) => {
 
   const slug = generateSlug(event.title, event._id.toString());
 
-  return eventRepository.publishEvent(id, slug);
+  return eventRepository.publishOwnedEvent(id, ownerId, slug);
 };
 
 module.exports = {
   createEvent,
-  findEventById,
+  findOwnedEventById,
   findEventBySlug,
-  updateEvent,
-  publishEvent,
+  updateOwnedEvent,
+  publishOwnedEvent,
 };
