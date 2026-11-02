@@ -3,7 +3,14 @@ const eventService = require("../services/eventService");
 const createEvent = async (req, res) => {
   try {
     const eventData = {
-      ...req.body,
+      eventType: req.body.eventType,
+      title: req.body.title,
+      date: req.body.date,
+      time: req.body.time,
+      venue: req.body.venue,
+      message: req.body.message,
+      language: req.body.language,
+      theme: req.body.theme,
       owner: req.user.id,
     };
 

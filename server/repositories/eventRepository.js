@@ -9,7 +9,7 @@ const findOwnedEventById = async (id, ownerId) => {
 };
 
 const findEventBySlug = async (slug) => {
-  return Event.findOne({ slug });
+  return Event.findOne({ slug, status: "published" });
 }
 
 const updateOwnedEvent = async (id, ownerId, eventData) => {

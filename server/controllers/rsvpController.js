@@ -1,4 +1,5 @@
 const rsvpService = require('../services/rsvpService');
+const eventService = require('../services/eventService');
 
 const createRSVP = async (req, res) => {
   try {
@@ -21,6 +22,15 @@ const createRSVP = async (req, res) => {
 
 const getRSVPsByEvent = async (req, res) => {
   try {
+    const event = await eventService.findOwnedEventById(req.params.eventId, req.user.id);
+
+    if (!event) {
+      return res.status(404).json({
+        success: false,
+        message: 'Event not found',
+      });
+    }
+
     const rsvps = await rsvpService.findRSVPsByEvent(req.params.eventId);
 
     res.status(200).json({
