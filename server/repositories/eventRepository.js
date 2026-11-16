@@ -37,6 +37,7 @@ const publishOwnedEvent = async (id, ownerId, slug) => {
 };
 
 module.exports = {
+  findPublishedEventById: id => Event.findOne({ _id: id, status: 'published' }),
   createEvent,
   findOwnedEventById,
   findEventBySlug,

@@ -1,41 +1,16 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-
+const authRepository = require('../repositories/authRepository');
 async function authenticate(req, res, next) {
-    try {
-        const authHeader = req.headers.authorization;
-
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            return res.status(401).json({
-                success: false,
-                message: 'Authentication required',
-            });
-        }
-        
-        const token = authHeader.split(' ')[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        const user = await User.findById(decoded.sub);
-
-        if (!user || user.status !== 'active') {
-            return res.status(403).json({
-                success: false,
-                message: 'Invalid or inactive account',
-            });
-        }
-
-        req.user = { 
-            id: user._id.toString(),
-            role: user.role,
-        };
-
-        next();
-    } catch (error) {
-        return res.status(401).json({
-            success: false,
-            message: 'Invalid or expired token',
-        });
+  try {
+    if (!req.session?.userId) return res.status(401).json({ success: false, message: 'Authentication required' });
+    const user = await authRepository.findById(req.session.userId);
+    if (!user || user.status !== 'active') {
+      await new Promise((resolve, reject) => req.session.destroy(error => error ? reject(error) : resolve()));
+      res.clearCookie(req.app.locals.sessionCookieName, req.app.locals.sessionCookieOptions);
+      return res.status(403).json({ success: false, message: 'Invalid or inactive account' });
     }
+    req.user = { id: user._id.toString(), role: user.role };
+    req.customer = { id: user._id.toString(), name: user.name, email: user.email };
+    return next();
+  } catch (error) { return next(error); }
 }
-
 module.exports = authenticate;
