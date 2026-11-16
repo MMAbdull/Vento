@@ -3,26 +3,25 @@ const eventService = require('../services/eventService');
 
 const createRSVP = async (req, res) => {
   try {
-    const rsvp = await rsvpService.createRSVP({
-      event: req.params.eventId,
-      ...req.body,
-    });
+    const rsvp = await rsvpService.createRSVP(req.params.eventId, req.body);
 
     res.status(201).json({
       success: true,
       data: rsvp,
     });
   } catch (error) {
-    res.status(500).json({
+    const expected = error instanceof rsvpService.RSVPError;
+    res.status(expected ? error.statusCode : 503).json({
       success: false,
-      message: error.message,
+      message: expected ? error.message : 'Unable to submit RSVP',
     });
   }
 };
 
 const getRSVPsByEvent = async (req, res) => {
   try {
-    const event = await eventService.findOwnedEventById(req.params.eventId, req.user.id);
+    const eventId = rsvpService.validateEventId(req.params.eventId);
+    const event = await eventService.findOwnedEventById(eventId, req.user.id);
 
     if (!event) {
       return res.status(404).json({
@@ -31,16 +30,17 @@ const getRSVPsByEvent = async (req, res) => {
       });
     }
 
-    const rsvps = await rsvpService.findRSVPsByEvent(req.params.eventId);
+    const rsvps = await rsvpService.findRSVPsByEvent(eventId);
 
     res.status(200).json({
       success: true,
       data: rsvps,
     });
   } catch (error) {
-    res.status(400).json({
+    const expected = error instanceof rsvpService.RSVPError;
+    res.status(expected ? error.statusCode : 503).json({
       success: false,
-      message: error.message,
+      message: expected ? error.message : 'Unable to list RSVP responses',
     });
   }
 };

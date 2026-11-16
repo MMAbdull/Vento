@@ -13,6 +13,7 @@ async function findEmailWithPassword(email) {
 }
 
 module.exports = {
+    findById: id => User.findById(id),
     findByEmail,
     createUser,
     findEmailWithPassword,

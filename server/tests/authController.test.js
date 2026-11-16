@@ -26,6 +26,11 @@ authServiceModule.exports = authServiceMock;
 require.cache[authServicePath] = authServiceModule;
 
 const { login, register } = require('../controllers/authController');
+function request(body) {
+  const req = { body, session: { csrfToken: 'unit-test-only' } };
+  req.sessionStore = { async authenticate(_req, verify) { await verify(); } };
+  return req;
+}
 
 function createResponse() {
   return {
@@ -71,9 +76,7 @@ test('registration rejects missing, blank, and whitespace-only required fields',
 test('registration trims name and email and accepts an eight-character password', async () => {
   const res = createResponse();
 
-  await register({
-    body: { name: '  Person  ', email: ' person@example.com ', password: '12345678' },
-  }, res);
+  await register(request({ name: '  Person  ', email: ' person@example.com ', password: '12345678' }), res);
 
   assert.equal(res.statusCode, 201);
   assert.deepEqual(serviceCalls.register, [{
@@ -105,9 +108,7 @@ test('login rejects missing, blank, and whitespace-only email or password', asyn
 test('login trims email and leaves the password unchanged', async () => {
   const res = createResponse();
 
-  await login({
-    body: { email: ' person@example.com ', password: '  pass  ' },
-  }, res);
+  await login(request({ email: ' person@example.com ', password: '  pass  ' }), res);
 
   assert.equal(res.statusCode, 200);
   assert.deepEqual(serviceCalls.login, [{

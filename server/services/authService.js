@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const authRepository = require('../repositories/authRepository');
 
 async function register({ name, email, password }) {
@@ -27,7 +26,7 @@ async function register({ name, email, password }) {
             name: user.name,
             email: user.email,
         },
-        token: createToken(user._id),
+        id: user._id.toString(), status: user.status,
     };
 }
  
@@ -53,12 +52,8 @@ async function login({ email, password }) {
             name: user.name,
             email: user.email,
         },
-        token: createToken(user._id),
+        id: user._id.toString(), status: user.status,
     };
-}
-
-function createToken(userId) {
-    return jwt.sign({ sub: userId.toString() }, process.env.JWT_SECRET, { expiresIn: '1d' });
 }
 
 module.exports = { register, login };
